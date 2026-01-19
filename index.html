@@ -4,10 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="assets/styles/style.css">
 </head>
 <body>
-    <h1>Trivia de Preguntas</h1>
-
+    <div id="main-card">
+        <h1>Trivia de Preguntas</h1>
+        <div id="puntaje"></div> <!-- Mueve esto arriba de la pregunta -->
+        <div id="pregunta"></div>
+        <input type="text" id="respuesta" placeholder="Escribe tu respuesta">
+        <div id="feedback"></div>
+        <div class="botones">
+            <button id="btnResponder">Responder</button>
+            <button id="btnReiniciar">Reiniciar Juego</button>
+        </div>
+    </div>
+    <div id="historial"></div>
+    <button id="btnBorrarHistorial">Borrar historial</button>
+    <div id="timer-bar-container">
+    <div id="timer-bar"></div>
+    </div>
     <script src="main.js"></script>
 </body>
 </html>

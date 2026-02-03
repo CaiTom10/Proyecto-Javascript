@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Trivia de Preguntas</title>
     <link rel="stylesheet" href="assets/styles/style.css">
 </head>
 <body>
+    <div id="pantalla-inicio">
+        <h2>¿Quieres jugar a la trivia?</h2>
+        <button id="btnIniciar">¡Sí, quiero jugar!</button>
+    </div>
     <div id="main-card">
         <h1>Trivia de Preguntas</h1>
-        <div id="puntaje"></div> <!-- Mueve esto arriba de la pregunta -->
+        <div id="puntaje"></div>
         <div id="pregunta"></div>
         <input type="text" id="respuesta" placeholder="Escribe tu respuesta">
         <div id="feedback"></div>
@@ -18,11 +22,12 @@
             <button id="btnReiniciar">Reiniciar Juego</button>
         </div>
     </div>
+    <div id="timer-reloj-container">
+        <span id="timer-reloj-icon">⏰</span>
+        <span id="timer-reloj-numero">15</span>
+    </div>
     <div id="historial"></div>
     <button id="btnBorrarHistorial">Borrar historial</button>
-    <div id="timer-bar-container">
-    <div id="timer-bar"></div>
-    </div>
-    <script src="main.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

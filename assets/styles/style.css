@@ -1,3 +1,4 @@
+/* Fondo y layout general */
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
@@ -8,95 +9,59 @@ body {
     align-items: center;
 }
 
+/* Oculta trivia y temporizador al inicio */
 #main-card,
 #timer-reloj-container {
     display: none;
 }
 
+/* Pantalla de inicio */
 #pantalla-inicio {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 80px;
 }
-
 #pantalla-inicio h2 {
     text-align: center;
     margin-bottom: 24px;
 }
 
+/* Card principal */
 #main-card {
     background: #fff;
     border-radius: 18px;
     box-shadow: 0 4px 24px #0002;
     padding: 32px 24px 24px 24px;
     margin-top: 40px;
-    width: 100%;
     max-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    animation: fadeInCard 1s cubic-bezier(.4,0,.2,1);
-    position: relative;
     min-height: 400px;
 }
 
-@keyframes fadeInCard {
-    from { opacity: 0; transform: translateY(40px);}
-    to { opacity: 1; transform: translateY(0);}
+/* Títulos y textos */
+h1, #puntaje, #pregunta, #feedback {
+    text-align: center;
 }
-
 h1 {
     color: #2d3a4b;
     margin-bottom: 24px;
-    text-align: center;
 }
-
 #puntaje, #pregunta, #feedback {
     margin: 20px;
     font-size: 20px;
-    text-align: center;
-    animation: fadeIn 0.7s;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px);}
-    to { opacity: 1; transform: translateY(0);}
-}
-
+/* Feedback visual */
 #feedback {
     font-weight: bold;
     min-height: 28px;
     transition: color 0.3s, opacity 0.3s;
-    opacity: 1;
-    animation: popIn 0.4s;
 }
 
-@keyframes popIn {
-    0% { opacity: 0; transform: scale(0.8);}
-    80% { opacity: 1; transform: scale(1.05);}
-    100% { opacity: 1; transform: scale(1);}
-}
-
-input[type="text"] {
-    padding: 12px;
-    font-size: 18px;
-    border-radius: 12px;
-    border: 1px solid #bcd0ee;
-    outline: none;
-    transition: border 0.2s, box-shadow 0.2s;
-    width: 80%;
-    margin-bottom: 12px;
-    box-shadow: 0 1px 4px #0001;
-    text-align: center;
-}
-
-input[type="text"]:focus {
-    border: 1.5px solid #6a9ae2;
-    background: #f7fbff;
-    box-shadow: 0 2px 8px #6a9ae233;
-}
-
+/* Input de respuesta */
 #respuesta {
     display: block;
     margin: 0 auto 12px auto;
@@ -111,13 +76,13 @@ input[type="text"]:focus {
     text-align: center;
     background: #f7fbff;
 }
-
 #respuesta:focus {
     border: 1.5px solid #6a9ae2;
     background: #e0eafc;
     box-shadow: 0 2px 8px #6a9ae233;
 }
 
+/* Botones */
 button {
     margin: 10px 8px;
     padding: 12px 28px;
@@ -131,28 +96,25 @@ button {
     box-shadow: 0 2px 8px #0001;
     transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
 }
-
 button:hover:not(:disabled) {
     background: linear-gradient(90deg, #4d7bbd 60%, #6ec6ff 100%);
     transform: translateY(-2px) scale(1.05);
     box-shadow: 0 4px 16px #6a9ae233;
 }
-
 button:disabled {
     background: #bcd0ee;
     cursor: not-allowed;
 }
-
 .botones {
     width: 100%;
     display: flex;
     justify-content: center;
     gap: 16px;
-    position: absolute;
     bottom: 24px;
     left: 0;
 }
 
+/* Temporizador visual */
 #timer-reloj-container {
     display: flex;
     align-items: center;
@@ -163,11 +125,9 @@ button:disabled {
     margin: 24px auto 0 auto;
     gap: 10px;
 }
-
 #timer-reloj-icon {
     font-size: 2.2rem;
 }
-
 #timer-reloj-numero {
     font-size: 2.2rem;
     min-width: 40px;
@@ -179,6 +139,7 @@ button:disabled {
     transition: background 0.3s, color 0.3s;
 }
 
+/* Historial de resultados */
 #historial {
     margin: 30px auto;
     max-width: 350px;
@@ -189,23 +150,21 @@ button:disabled {
     font-size: 16px;
     text-align: center;
 }
-
 #historial h3 {
     margin-top: 0;
     color: #555;
     font-size: 20px;
     text-align: center;
 }
-
 #historial ul {
     padding-left: 0;
 }
-
 #historial li {
     margin-bottom: 8px;
     text-align: center;
 }
 
+/* Botón borrar historial */
 #btnBorrarHistorial {
     margin: 10px auto 30px auto;
     display: block;
@@ -223,4 +182,10 @@ button:disabled {
 #btnBorrarHistorial:hover {
     background: #c0392b;
 }
+
+/* Feedback colores */
+.feedback-correcto { color: #27ae60; }
+.feedback-incorrecto { color: #c0392b; }
+.feedback-aviso { color: #e67e22; }
+.feedback-tiempo { color: #e67e22; }
 

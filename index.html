@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="assets/styles/style.css">
 </head>
 <body>
+    <!-- Pantalla de inicio -->
     <div id="pantalla-inicio">
         <h2>¿Quieres jugar a la trivia?</h2>
         <button id="btnIniciar">¡Sí, quiero jugar!</button>
     </div>
+    <!-- Card principal de la trivia -->
     <div id="main-card">
         <h1>Trivia de Preguntas</h1>
         <div id="puntaje"></div>
@@ -22,12 +24,16 @@
             <button id="btnReiniciar">Reiniciar Juego</button>
         </div>
     </div>
+    <!-- Temporizador visual -->
     <div id="timer-reloj-container">
         <span id="timer-reloj-icon">⏰</span>
         <span id="timer-reloj-numero">15</span>
     </div>
+    <!-- Historial de resultados -->
     <div id="historial"></div>
     <button id="btnBorrarHistorial">Borrar historial</button>
+    <!-- JS principal y librería SweetAlert2 -->
     <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

@@ -1,0 +1,7 @@
+[
+    { "texto": "¿Cuánto es 22 + 178?", "respuestaCorrecta": 200 },
+    { "texto": "¿Cuánto es 200 - 50?", "respuestaCorrecta": 150 },
+    { "texto": "¿Cuánto es 12 x 8?", "respuestaCorrecta": 96 },
+    { "texto": "¿Cuánto es 81 ÷ 9?", "respuestaCorrecta": 9 },
+    { "texto": "¿Cuánto es 15 x 7?", "respuestaCorrecta": 105 }
+]   

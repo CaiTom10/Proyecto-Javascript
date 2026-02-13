@@ -1,15 +1,27 @@
+// --- Modelo de pregunta ---
 function Pregunta(texto, respuestaCorrecta) {
     this.texto = texto;
     this.respuestaCorrecta = respuestaCorrecta;
 }
 
-const preguntas = [
-    new Pregunta("¿Cuánto es 22 + 178?", 200),
-    new Pregunta("¿Cuánto es 200 - 50?", 150),
-    new Pregunta("¿Cuánto es 12 x 8?", 96),
-    new Pregunta("¿Cuánto es 81 ÷ 9?", 9),
-    new Pregunta("¿Cuánto es 15 x 7?", 105)
-];
+// --- Cargar preguntas desde JSON ---
+let preguntas = [];
+let preguntasCargadas = false;
+
+fetch('js/preguntas.json')
+    .then(response => response.json())
+    .then(data => {
+    preguntas = data.map(p => new Pregunta(p.texto, p.respuestaCorrecta));
+    preguntasCargadas = true;
+    })
+    .catch(() => {
+    Swal.fire({
+        title: 'Error',
+        text: 'No se pudieron cargar las preguntas.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+    });
+});
 
 // --- Variables de estado ---
 let puntaje = 0;
@@ -33,12 +45,22 @@ const timerRelojNumero = document.getElementById("timer-reloj-numero");
 const timerRelojContainer = document.getElementById("timer-reloj-container");
 const btnBorrarHistorial = document.getElementById("btnBorrarHistorial");
 
-// --- Pantalla de inicio ---
+// --- Mostrar pantalla de inicio ---
 pantallaInicio.style.display = "flex";
 mainCard.style.display = "none";
 timerRelojContainer.style.display = "none";
 
+// --- Iniciar trivia solo cuando preguntas están listas ---
 btnIniciar.addEventListener("click", () => {
+    if (!preguntasCargadas || preguntas.length === 0) {
+        Swal.fire({
+            title: 'Cargando...',
+            text: 'Las preguntas aún no están listas. Por favor, espera unos segundos e intenta de nuevo.',
+            icon: 'info',
+            confirmButtonText: 'Aceptar'
+        });
+        return;
+    }
     pantallaInicio.style.display = "none";
     mainCard.style.display = "block";
     timerRelojContainer.style.display = "flex";
@@ -47,13 +69,16 @@ btnIniciar.addEventListener("click", () => {
 
 // --- Eventos principales ---
 btnResponder.addEventListener("click", responderPregunta);
-respuestaInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") responderPregunta();
-});
 btnReiniciar.addEventListener("click", reiniciarJuego);
 btnBorrarHistorial.addEventListener("click", borrarHistorial);
 
-// --- Funciones principales ---
+// Permitir responder con Enter
+function enterHandler(e) {
+    if (e.key === "Enter") responderPregunta();
+}
+respuestaInput.addEventListener("keydown", enterHandler);
+
+// --- Mostrar pregunta actual ---
 function mostrarPregunta() {
     preguntaDiv.textContent = preguntas[indice].texto;
     respuestaInput.value = "";
@@ -64,6 +89,7 @@ function mostrarPregunta() {
     iniciarTemporizador();
 }
 
+// --- Lógica de respuesta ---
 function responderPregunta() {
     clearInterval(timerInterval);
     feedbackDiv.classList.remove("feedback-correcto", "feedback-incorrecto", "feedback-aviso", "feedback-tiempo");
@@ -102,10 +128,19 @@ function responderPregunta() {
         puntajeDiv.style.textAlign = "center";
         btnResponder.disabled = true;
         respuestaInput.disabled = true;
+        respuestaInput.removeEventListener("keydown", enterHandler);
         guardarResultado();
+        Swal.fire({
+            title: '¡Trivia finalizada!',
+            text: `Tu puntaje es: ${puntaje}`,
+            icon: 'success',
+            showConfirmButton: false, 
+            timer: 5000               
+        });
     }
 }
 
+// --- Reiniciar juego ---
 function reiniciarJuego() {
     indice = 0;
     puntaje = 0;
@@ -113,9 +148,11 @@ function reiniciarJuego() {
     feedbackDiv.textContent = "";
     btnResponder.disabled = false;
     respuestaInput.disabled = false;
+    respuestaInput.addEventListener("keydown", enterHandler);
     mostrarPregunta();
 }
 
+// --- Temporizador visual ---
 function iniciarTemporizador() {
     clearInterval(timerInterval);
     tiempoRestante = TIEMPO_POR_PREGUNTA;
@@ -140,25 +177,31 @@ function iniciarTemporizador() {
                     puntajeDiv.style.textAlign = "center";
                     btnResponder.disabled = true;
                     respuestaInput.disabled = true;
+                    respuestaInput.removeEventListener("keydown", enterHandler);
                     guardarResultado();
+                    Swal.fire({
+                        title: '¡Trivia finalizada!',
+                        text: `Tu puntaje es: ${puntaje}`,
+                        icon: 'success',
+                        showConfirmButton: false, 
+                        timer: 5000               
+                    });
                 }
             }, 1000);
         }
     }, 1000);
 }
-
 function actualizarReloj() {
     timerRelojNumero.textContent = tiempoRestante;
 }
 
-// --- Historial ---
+// --- Historial de resultados ---
 function guardarResultado() {
     const resultadosPrevios = JSON.parse(localStorage.getItem("resultados")) || [];
     resultadosPrevios.push({ puntaje, fecha: new Date().toLocaleString() });
     localStorage.setItem("resultados", JSON.stringify(resultadosPrevios));
     mostrarHistorial();
 }
-
 function mostrarHistorial() {
     const resultados = JSON.parse(localStorage.getItem("resultados")) || [];
     if (resultados.length === 0) {
@@ -172,7 +215,6 @@ function mostrarHistorial() {
     html += "</ul>";
     historialDiv.innerHTML = html;
 }
-
 function borrarHistorial() {
     localStorage.removeItem("resultados");
     mostrarHistorial();
